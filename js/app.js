@@ -16,9 +16,9 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = this.x + this.speed * dt;
+    this.x = this.x + this.speed * dt * 300;
     if (this.x < 0 || this.x > 505) {
-        this.x = 3;
+        this.x = 0;
     }
 };
 
@@ -38,17 +38,17 @@ var Player = function(x, y, speed) {
 };
 
 Player.prototype.update = function() {
-    if (this.x > 505) {
-        this.x = 505;
+    if (this.x > 402) {
+        this.x = 402;
     }
     if (this.x < 0) {
         this.x = 0;
     }
-    if (this.y > 606) {
-        this.y = 606;
+    if (this.y > 383) {
+        this.y = 383;
     }
-    if (this.y < 0) {
-        this.y = 0;
+    if (this.y < 51) {
+        this.y = 51;
     }
 };
 
@@ -57,17 +57,22 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(keyPress) {
-    if (keyPress = 'left') {
+    console.log(keyPress)
+    if (keyPress === 'left') {
         this.x = this.x - 101;
+        console.log(this.x)
     }
-    if (keyPress = 'right') {
+    if (keyPress === 'right') {
         this.x = this.x + 101;
+        console.log(this.x)
     }
-    if (keyPress = 'up') {
-        this.y = this.y - 101;
+    if (keyPress === 'up') {
+        this.y = this.y - 83;
+        console.log(this.y)
     }
-    if (keyPress = 'down') {
-        this.y = this.y + 101;
+    if (keyPress === 'down') {
+        this.y = this.y + 83;
+        console.log(this.y)
     }
 }
 // Now instantiate your objects.
@@ -77,10 +82,10 @@ var allEnemies = [];
 var player = new Player (200, 300, 1);
 
 function addEnemy() {
-    var positionY = [51, 135, 220];
+    var positionY = [51, 134, 217];
 
     for (var i of positionY) {
-        allEnemies.push(new Enemy(Math.floor((Math.random() * 505) + 1), i, Math.random()));
+        allEnemies.push(new Enemy(0, i, Math.random()));
     }
 }
 addEnemy();
