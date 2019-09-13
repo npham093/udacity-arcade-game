@@ -16,9 +16,16 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = this.x + this.speed * dt * 300;
-    if (this.x < 0 || this.x > 505) {
-        this.x = 0;
+    this.x = this.x + this.speed * dt * 30;
+    if (this.x > 505) {
+        this.x = -101;
+    }
+
+    if (this.y === player.y
+        && player.x - this.x < 101
+        && this.x - player.x < 101) {
+        player.x = 200;
+        player.y = 300;
     }
 };
 
@@ -34,7 +41,7 @@ var Player = function(x, y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
-    this.sprite = 'images/char-boy.png';
+    this.sprite = 'images/char-princess-girl.png';
 };
 
 Player.prototype.update = function() {
@@ -48,8 +55,9 @@ Player.prototype.update = function() {
         this.y = 383;
     }
     if (this.y < 51) {
-        this.y = 51;
+        this.y = 383;
     }
+
 };
 
 Player.prototype.render = function() {
@@ -57,22 +65,17 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(keyPress) {
-    console.log(keyPress)
     if (keyPress === 'left') {
         this.x = this.x - 101;
-        console.log(this.x)
     }
     if (keyPress === 'right') {
         this.x = this.x + 101;
-        console.log(this.x)
     }
     if (keyPress === 'up') {
         this.y = this.y - 83;
-        console.log(this.y)
     }
     if (keyPress === 'down') {
         this.y = this.y + 83;
-        console.log(this.y)
     }
 }
 // Now instantiate your objects.
@@ -81,14 +84,13 @@ Player.prototype.handleInput = function(keyPress) {
 var allEnemies = [];
 var player = new Player (200, 300, 1);
 
-function addEnemy() {
-    var positionY = [51, 134, 217];
+(function addEnemy() {
+    var positionY = [51, 134, 134, 217];
 
     for (var i of positionY) {
-        allEnemies.push(new Enemy(0, i, Math.random()));
+        allEnemies.push(new Enemy(-101, i, Math.floor((Math.random() * 10) + 1)));
     }
-}
-addEnemy();
+})();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
